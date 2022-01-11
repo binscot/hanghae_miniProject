@@ -26,15 +26,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300;500;700&display=swap" rel="stylesheet">
 
     <title>축구경기 매칭 서비스</title>
-        <style type="text/css">
-            tr.highlight > td {
-                background-color: #e8344e;
-                color: white;
-            }
+    <style type="text/css">
+        tr.highlight > td {
+            background-color: #e8344e;
+            color: white;
+        }
 
         tr.highlight a {
             color: white;
         }
+
         * {
             font-family: 'Sunflower', sans-serif;
         }
@@ -115,27 +116,72 @@
             bottom: 10px;
             right: 10px;
         }
+
         .soccer_title {
             font-size: 1rem;
             color: #212529;
         }
+
         .comment_box {
             margin-top: 20px;
             border-top: 1px solid gray;
             padding: 20px 0 0;
         }
 
-        {#.comment_box .card-text {#}
-        {#    margin-bottom: 5px;#}
-        {#}#}
-        {##}
-        {#.comment_box .card-text:nth-child(n+2) {#}
-        {#    margin-bottom: 0;#}
-        {#}#}
-        {##}
-        {#.comment_box .card-text:nth-child(n+3) {#}
-        {#    display: none;#}
-        {#}#}
+        {
+        #
+        .comment_box .card-text {
+            #
+        }
+
+        {
+            # margin-bottom: 5px
+        ;
+            #
+        }
+        {
+            #
+        }
+        #
+        }
+        {
+            # #
+        }
+        {
+        #
+        .comment_box .card-text:nth-child(n+2) {
+            #
+        }
+
+        {
+            # margin-bottom: 0
+        ;
+            #
+        }
+        {
+            #
+        }
+        #
+        }
+        {
+            # #
+        }
+        {
+        #
+        .comment_box .card-text:nth-child(n+3) {
+            #
+        }
+
+        {
+            # display: none
+        ;
+            #
+        }
+        {
+            #
+        }
+        #
+        }
 
 
         .popup_btn {
@@ -145,16 +191,56 @@
             bottom: 40px;
             right: 40px;
             background-color: white;
-            {#border-radius: 100%;background-image: url("../static/plus.png");#}
-            background-size: 90px;
-            background-repeat: no-repeat;
-            background-position: center;
-            cursor: pointer;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+
+        {
+            #border-radius: 100%
+        ;
+            background-image: url("../static/plus.png")
+        ;
+            #
+        }
+        background-size:
+
+        90
+        px
+
+        ;
+        background-repeat: no-repeat
+
+        ;
+        background-position: center
+
+        ;
+        cursor: pointer
+
+        ;
+        box-shadow:
+
+        0
+        0
+        10
+        px
+
+        rgba
+        (
+        0
+        ,
+        0
+        ,
+        0
+        ,
+        0.4
+        )
+        ;
         }
     </style>
     <script>
-        let words = {{ soccer|tojson }};
+        let words = {
+        {
+            soccer | tojson
+        }
+        }
+        ;
         console.log(words);
         let word_list = [];
         for (let i = 0; i < words.length; i++) {
@@ -162,26 +248,26 @@
         }
 
         function find_match() {
-                let word = $("#input-soccer").val().toLowerCase();
-                console.log(word);
-                if (word == "") {
-                            // 빈 문자열이면 얼럿
-                    alert("please write something first :)")
-                    return
-                }
-                if (word_list.includes(word)) {
-                            // 리스트에 없으면 상세 페이지로
-                    alert('경기있음')
-                    for (let i = 0; i < words.length; i++) {
-                        console.log(words[i]["when"]);
-                        if (words[i]["when"] == word) {
-                            alert(words[i]["user"] + "의 경기" )
-                            // $(`#word-${word}`).addClass('highlight').siblings().removeClass('highlight');
-                            // $(`#word-${word}`)[0].scrollIntoView();
-                        }
+            let word = $("#input-soccer").val().toLowerCase();
+            console.log(word);
+            if (word == "") {
+                // 빈 문자열이면 얼럿
+                alert("please write something first :)")
+                return
+            }
+            if (word_list.includes(word)) {
+                // 리스트에 없으면 상세 페이지로
+                alert('경기있음')
+                for (let i = 0; i < words.length; i++) {
+                    console.log(words[i]["when"]);
+                    if (words[i]["when"] == word) {
+                        alert(words[i]["user"] + "의 경기")
+                        // $(`#word-${word}`).addClass('highlight').siblings().removeClass('highlight');
+                        // $(`#word-${word}`)[0].scrollIntoView();
                     }
-
                 }
+
+            }
 
         }
 
@@ -206,30 +292,34 @@
         </div>
 
 
-
     </div>
     <center><h1>Jan, 2022</h1></center>
     <style>
-        table{
+        table {
             table-layout: fixed;
             text-align: center;
             margin: auto;
 
         }
-        th{
+
+        th {
             color: white;
         }
+
         td {
             color: white;
         }
-        #word-2{
+
+        #word-2 {
             color: white;
 
         }
+
         h1 {
             color: white;
 
         }
+
         /*a {*/
         /*    color: white;*/
         /*}*/
@@ -248,16 +338,16 @@
             {% for f in first %}
             <td>
                 <table>
-                    <td >{{ f.day }}</td>
+                    <td>{{ f.day }}</td>
                     <tr>
                         <td>
-                                {% for soc in soccer %}
-                                {% if ((soc.is_matched == '1') and (soc.when == f.day )) %}
-                                    <a href="">{{ soc.user }} vs {{ soc.match }}</a><br>
-                                    <a href="">{{ soc.when }}</a><br>
-                                    <a href="">{{ soc.where }}</a><br>
-                                {% endif %}
-                                {% endfor %}
+                            {% for soc in soccer %}
+                            {% if ((soc.is_matched == '1') and (soc.when == f.day )) %}
+                            <a href="">{{ soc.user }} vs {{ soc.match }}</a><br>
+                            <a href="">{{ soc.when }}</a><br>
+                            <a href="">{{ soc.where }}</a><br>
+                            {% endif %}
+                            {% endfor %}
                         </td>
                     </tr>
                 </table>
@@ -268,56 +358,56 @@
             {% for s in second %}
             <td>
                 <table>
-                    <td >{{ s.day }}</td>
+                    <td>{{ s.day }}</td>
                     <tr>
                         <td>
-                                {% for soc in soccer %}
-                                {% if ((soc.is_matched == '1') and (soc.when == s.day )) %}
-                                    <a href="">{{ soc.user }} vs {{ soc.match }}</a><br>
-                                    <a href="">{{ soc.when }}</a><br>
-                                    <a href="">{{ soc.where }}</a><br>
-                                {% endif %}
-                                {% endfor %}
+                            {% for soc in soccer %}
+                            {% if ((soc.is_matched == '1') and (soc.when == s.day )) %}
+                            <a href="">{{ soc.user }} vs {{ soc.match }}</a><br>
+                            <a href="">{{ soc.when }}</a><br>
+                            <a href="">{{ soc.where }}</a><br>
+                            {% endif %}
+                            {% endfor %}
                         </td>
                     </tr>
                 </table>
             </td>
             {% endfor %}
         </tr>
-       <tr>
+        <tr>
             {% for s in third %}
             <td>
                 <table>
-                    <td >{{ s.day }}</td>
+                    <td>{{ s.day }}</td>
                     <tr>
                         <td>
-                                {% for soc in soccer %}
-                                {% if ((soc.is_matched == '1') and (soc.when == s.day )) %}
-                                    <a href="">{{ soc.user }} vs {{ soc.match }}</a><br>
-                                    <a href="">{{ soc.when }}</a><br>
-                                    <a href="">{{ soc.where }}</a><br>
-                                {% endif %}
-                                {% endfor %}
+                            {% for soc in soccer %}
+                            {% if ((soc.is_matched == '1') and (soc.when == s.day )) %}
+                            <a href="">{{ soc.user }} vs {{ soc.match }}</a><br>
+                            <a href="">{{ soc.when }}</a><br>
+                            <a href="">{{ soc.where }}</a><br>
+                            {% endif %}
+                            {% endfor %}
                         </td>
                     </tr>
                 </table>
             </td>
             {% endfor %}
         </tr>
-         <tr>
+        <tr>
             {% for s in fourth %}
             <td>
                 <table>
-                    <td >{{ s.day }}</td>
+                    <td>{{ s.day }}</td>
                     <tr>
                         <td>
-                                {% for soc in soccer %}
-                                {% if ((soc.is_matched == '1') and (soc.when == s.day )) %}
-                                    <a href="">{{ soc.user }} vs {{ soc.match }}</a><br>
-                                    <a href="">{{ soc.when }}</a><br>
-                                    <a href="">{{ soc.where }}</a><br>
-                                {% endif %}
-                                {% endfor %}
+                            {% for soc in soccer %}
+                            {% if ((soc.is_matched == '1') and (soc.when == s.day )) %}
+                            <a href="">{{ soc.user }} vs {{ soc.match }}</a><br>
+                            <a href="">{{ soc.when }}</a><br>
+                            <a href="">{{ soc.where }}</a><br>
+                            {% endif %}
+                            {% endfor %}
                         </td>
                     </tr>
                 </table>
@@ -328,16 +418,16 @@
             {% for s in fifth %}
             <td>
                 <table>
-                    <td >{{ s.day }}</td>
+                    <td>{{ s.day }}</td>
                     <tr>
                         <td>
-                                {% for soc in soccer %}
-                                {% if ((soc.is_matched == '1') and (soc.when == s.day )) %}
-                                    <a href="">{{ soc.user }} vs {{ soc.match }}</a><br>
-                                    <a href="">{{ soc.when }}</a><br>
-                                    <a href="">{{ soc.where }}</a><br>
-                                {% endif %}
-                                {% endfor %}
+                            {% for soc in soccer %}
+                            {% if ((soc.is_matched == '1') and (soc.when == s.day )) %}
+                            <a href="">{{ soc.user }} vs {{ soc.match }}</a><br>
+                            <a href="">{{ soc.when }}</a><br>
+                            <a href="">{{ soc.where }}</a><br>
+                            {% endif %}
+                            {% endfor %}
                         </td>
                     </tr>
                 </table>
@@ -351,64 +441,66 @@
         <!--    card-deck에 id(music_box)추가함    -->
         <div class="card-deck" id="soccer_box">
             {% for soccer_team in soccer %}
-                {% if soccer_team.is_matched == 0 %}
-                    <div class="card">
-                                                <div class="img_box">
-                                                    <div class="like_box">
-                                                        <p class="team">{{ soccer_team.user }}</p>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <a target="" href="./detail.html" class="card-title soccer_title">{{ soccer_team.user }}</a>
-                                                    <h5 class="s_title">{{ soccer_team.title }}</h5>
-                                                    <div class="comment_box">
-                                                        <p class="card-text"><small class="s_name">{{ soccer_team.user }}</small><small
-                                                                class="text-muted comment ellipsis">팀 </small></p>
-                                                        <p class="card-text"><small class="s_where">어디서? : {{ soccer_team.where }}</small></p>
-                                                        <p class="card-text"><small class="s_when">언제? : {{ soccer_team.when }}</small></p>
+            {% if soccer_team.is_matched == 0 %}
+            <div class="card">
+                <div class="img_box">
+                    <div class="like_box">
+                        <p class="team">{{ soccer_team.user }}</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a target="" href="./detail.html" class="card-title soccer_title">{{ soccer_team.user }}</a>
+                    <h5 class="s_title">{{ soccer_team.title }}</h5>
+                    <div class="comment_box">
+                        <p class="card-text"><small class="s_name">{{ soccer_team.user }}</small><small
+                                class="text-muted comment ellipsis">팀 </small></p>
+                        <p class="card-text"><small class="s_where">어디서? : {{ soccer_team.where }}</small></p>
+                        <p class="card-text"><small class="s_when">언제? : {{ soccer_team.when }}</small></p>
 
-                                                        <p class="card-text"><small class="s_is_matched">매칭안됨</small></p>
-
-
-                                                        <a target="" href="./detail/${user}.html" class="card-title soccer_title">{{ soccer_team.user }}팀과 매칭하러가기</a>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                {% else %}
-                    <div class="card">
-                                                <div class="img_box">
-                                                    <div class="like_box">
-                                                        <p class="team">{{ soccer_team.user }}</p>
-                                                    </div>
-                                                </div>
-                                                <div class="card-body">
-                                                    <a target="" href="./detail.html" class="card-title soccer_title">{{ soccer_team.user }}</a>
-                                                    <h5 class="s_title">{{ soccer_team.title }}</h5>
-                                                    <div class="comment_box">
-                                                        <p class="card-text"><small class="s_name">{{ soccer_team.user }}</small><small
-                                                                class="text-muted comment ellipsis">팀 </small></p>
-                                                        <p class="card-text"><small class="s_where">어디서? : {{ soccer_team.where }}</small></p>
-                                                        <p class="card-text"><small class="s_when">언제? : {{ soccer_team.when }}</small></p>
-
-                                                        <p class="card-text"><small class="s_is_matched">매칭됨</small></p>
+                        <p class="card-text"><small class="s_is_matched">매칭안됨</small></p>
 
 
-                                                          <a target="" href="./detail/${user}.html" class="card-title soccer_title">누구랑? :
-                                                              {{ soccer_team.match }} </a>
+                        <a target="" href="./detail/${user}.html" class="card-title soccer_title">{{ soccer_team.user
+                            }}팀과 매칭하러가기</a>
 
-                                                    </div>
-                                                </div>
-                                            </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="card">
+                <div class="img_box">
+                    <div class="like_box">
+                        <p class="team">{{ soccer_team.user }}</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <a target="" href="./detail.html" class="card-title soccer_title">{{ soccer_team.user }}</a>
+                    <h5 class="s_title">{{ soccer_team.title }}</h5>
+                    <div class="comment_box">
+                        <p class="card-text"><small class="s_name">{{ soccer_team.user }}</small><small
+                                class="text-muted comment ellipsis">팀 </small></p>
+                        <p class="card-text"><small class="s_where">어디서? : {{ soccer_team.where }}</small></p>
+                        <p class="card-text"><small class="s_when">언제? : {{ soccer_team.when }}</small></p>
 
-                {% endif %}
+                        <p class="card-text"><small class="s_is_matched">매칭됨</small></p>
 
-            {%  endfor %}
+
+                        <a target="" href="./detail/${user}.html" class="card-title soccer_title">누구랑? :
+                            {{ soccer_team.match }} </a>
+
+                    </div>
+                </div>
+            </div>
+
+            {% endif %}
+
+            {% endfor %}
         </div>
     </div>
     <!-- popup 버튼 a 태그로 수정함   -->
     <a href="./write_board" class="popup_btn">게시글 등록하러가기</a>
-<!--    <div onclick="popup()" class="popup_btn"></div>-->
+    <a href="/detail">상세페이지로 가기</a>
+    <!--    <div onclick="popup()" class="popup_btn"></div>-->
 </div>
 </body>
 

@@ -117,8 +117,37 @@ def check_dup():
 
 
 
+@app.route('/detail')
+def homework():
 
+    orders = list(db.orders.find({}, {"_id": False}))
+    return render_template('detail.html', soc=orders)
 
+@app.route('/order', methods=['POST'])
+def save_order():
+    name_receive = request.form['name_give']
+    count_receive = request.form['count_give']
+    age_receive = request.form['age_give']
+    address_receive = request.form['address_give']
+    date_receive = request.form['date_give']
+    text_receive = request.form['text_give']
+
+    doc = {
+        'name': name_receive,
+        'count': count_receive,
+        'age': age_receive,
+        'address': address_receive,
+        'date': date_receive,
+        'text': text_receive
+    }
+    db.orders.insert_one(doc)
+    return jsonify({'result': 'success', 'msg': '주문 완료!'})
+
+# 주문 목록보기(Read) API
+@app.route('/order', methods=['GET'])
+def view_orders():
+    orders = list(db.orders.find({}, {'_id': False}))
+    return jsonify({'result': 'success', 'orders': orders})
 
 
 
