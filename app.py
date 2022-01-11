@@ -12,9 +12,9 @@ app.config['UPLOAD_FOLDER'] = "./static/profile_pics"
 
 SECRET_KEY = 'SPARTA'
 
-client = MongoClient('mongodb://test:test@localhost', 27017)
+# client = MongoClient('mongodb://test:test@localhost', 27017)
 # client = MongoClient('localhost', 27017)
-# client = MongoClient('내AWS아이피', 27017, username="아이디", password="비밀번호")
+client = MongoClient('52.79.249.185', 27017, username="test", password="test")
 db = client.dbsparta_plus_week4
 
 
@@ -32,10 +32,45 @@ def home():
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
 
+# @app.route('/main')
+# def login():
+#     msg = request.args.get("msg")
+#     return render_template('index.html', msg=msg)
+
+#보여주기
 @app.route('/main')
-def login():
-    msg = request.args.get("msg")
-    return render_template('index.html', msg=msg)
+def hello_world():
+
+    soccer_team = list(db.soccer.find({'status': 0}, {'_id': False}))
+
+    dict_f = dict()
+    first = list()
+    for i in range(1, 8):
+        dict_f = dict()
+        dict_f['day'] = str(i)
+        first.append(dict_f)
+    second = list()
+    for i in range(8, 15):
+        dict_f = dict()
+        dict_f['day'] = str(i)
+        second.append(dict_f)
+    third = list()
+    for i in range(15, 22):
+        dict_f = dict()
+        dict_f['day'] = str(i)
+        third.append(dict_f)
+    fourth = list()
+    for i in range(22, 29):
+        dict_f = dict()
+        dict_f['day'] = str(i)
+        fourth.append(dict_f)
+    fifth = list()
+    for i in range(29, 32):
+        dict_f = dict()
+        dict_f['day'] = str(i)
+        fifth.append(dict_f)
+    #first = [{'day':1}, {'day':2}]
+    return render_template('soccer.html', soccer= soccer_team , first = first, second=second, third = third , fourth = fourth , fifth=fifth)
 
 
 @app.route('/sign_in', methods=['POST'])
@@ -80,40 +115,7 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
-#보여주기
-@app.route('/main')
-def hello_world():
 
-    soccer_team = list(db.soccer.find({'status': 0}, {'_id': False}))
-
-    dict_f = dict()
-    first = list()
-    for i in range(1, 8):
-        dict_f = dict()
-        dict_f['day'] = str(i)
-        first.append(dict_f)
-    second = list()
-    for i in range(8, 15):
-        dict_f = dict()
-        dict_f['day'] = str(i)
-        second.append(dict_f)
-    third = list()
-    for i in range(15, 22):
-        dict_f = dict()
-        dict_f['day'] = str(i)
-        third.append(dict_f)
-    fourth = list()
-    for i in range(22, 29):
-        dict_f = dict()
-        dict_f['day'] = str(i)
-        fourth.append(dict_f)
-    fifth = list()
-    for i in range(29, 32):
-        dict_f = dict()
-        dict_f['day'] = str(i)
-        fifth.append(dict_f)
-    #first = [{'day':1}, {'day':2}]
-    return render_template('soccer2.html', soccer= soccer_team , first = first, second=second, third = third , fourth = fourth , fifth=fifth)
 
 
 
