@@ -80,6 +80,45 @@ def check_dup():
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
 
+#보여주기
+@app.route('/main')
+def hello_world():
+
+    soccer_team = list(db.soccer.find({'status': 0}, {'_id': False}))
+
+    dict_f = dict()
+    first = list()
+    for i in range(1, 8):
+        dict_f = dict()
+        dict_f['day'] = str(i)
+        first.append(dict_f)
+    second = list()
+    for i in range(8, 15):
+        dict_f = dict()
+        dict_f['day'] = str(i)
+        second.append(dict_f)
+    third = list()
+    for i in range(15, 22):
+        dict_f = dict()
+        dict_f['day'] = str(i)
+        third.append(dict_f)
+    fourth = list()
+    for i in range(22, 29):
+        dict_f = dict()
+        dict_f['day'] = str(i)
+        fourth.append(dict_f)
+    fifth = list()
+    for i in range(29, 32):
+        dict_f = dict()
+        dict_f['day'] = str(i)
+        fifth.append(dict_f)
+    #first = [{'day':1}, {'day':2}]
+    return render_template('soccer2.html', soccer= soccer_team , first = first, second=second, third = third , fourth = fourth , fifth=fifth)
+
+
+
+
+
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
