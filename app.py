@@ -41,7 +41,7 @@ def home():
 @app.route('/main')
 def hello_world():
 
-    soccer_team = list(db.soccer.find({'status': 0}, {'_id': False}))
+    soccer_team = list(db.orders.find({'status': 0}, {'_id': False}))
 
     dict_f = dict()
     first = list()
@@ -71,6 +71,13 @@ def hello_world():
         fifth.append(dict_f)
     #first = [{'day':1}, {'day':2}]
     return render_template('soccer.html', soccer= soccer_team , first = first, second=second, third = third , fourth = fourth , fifth=fifth)
+
+@app.route('/detailtest/<name>', methods=['GET'])
+def detail_test(name=None):
+    soccer_team = db.orders.find_one({'name': name}, {'_id': False})
+    print(soccer_team)
+
+    return render_template('detail_test.html',  soccer_team= soccer_team)
 
 
 @app.route('/sign_in', methods=['POST'])
@@ -138,7 +145,10 @@ def save_order():
         'age': age_receive,
         'address': address_receive,
         'date': date_receive,
-        'text': text_receive
+        'text': text_receive,
+        'status': 0, # 하림 추가 
+        'is_matched': 0,
+        'match': None
     }
     db.orders.insert_one(doc)
     return jsonify({'result': 'success', 'msg': '주문 완료!'})

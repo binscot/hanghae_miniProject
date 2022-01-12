@@ -1,0 +1,51 @@
+{% if soccer_team.is_matched == 0 %}
+                    <div class="card">
+                                                <div class="img_box">
+                                                    <div class="like_box">
+                                                        <p class="team">{{ soccer_team.name }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <a target="" href="./detail.html" class="card-title soccer_title">{{ soccer_team.name }}</a>
+                                                    <h5 class="s_title">{{ soccer_team.title }}</h5>
+                                                    <div class="comment_box">
+                                                        <p class="card-text"><small class="s_name">{{ soccer_team.name }}</small><small
+                                                                class="text-muted comment ellipsis">팀 </small></p>
+                                                        <p class="card-text"><small class="s_where">어디서? : {{ soccer_team.address }}</small></p>
+                                                        <p class="card-text"><small class="s_when">언제? : {{ soccer_team.date }}</small></p>
+
+                                                        <p class="card-text"><small class="s_is_matched">매칭안됨</small></p>
+
+
+                                                        <a target="" href="./match/{{ soccer_team.name }}" class="card-title soccer_title">{{ soccer_team.name }}팀 매칭</a>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                {% else %}
+                    <div class="card">
+                                                <div class="img_box">
+                                                    <div class="like_box">
+                                                        <p class="team">{{ soccer_team.user }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <a target="" href="./detail.html" class="card-title soccer_title">{{ soccer_team.user }}</a>
+                                                    <h5 class="s_title">{{ soccer_team.title }}</h5>
+                                                    <div class="comment_box">
+                                                        <p class="card-text"><small class="s_name">{{ soccer_team.user }}</small><small
+                                                                class="text-muted comment ellipsis">팀 </small></p>
+                                                        <p class="card-text"><small class="s_where">어디서? : {{ soccer_team.address }}</small></p>
+                                                        <p class="card-text"><small class="s_when">언제? : {{ soccer_team.date }}</small></p>
+
+                                                        <p class="card-text"><small class="s_is_matched">매칭됨</small></p>
+
+
+                                                          <a target="" href="./match/{{ soccer_team.user }}" class="card-title soccer_title">누구랑? :
+                                                              {{ soccer_team.match }} </a>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                {% endif %}

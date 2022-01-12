@@ -342,10 +342,10 @@
                     <tr>
                         <td>
                             {% for soc in soccer %}
-                            {% if ((soc.is_matched == '1') and (soc.when == f.day )) %}
-                            <a href="">{{ soc.user }} vs {{ soc.match }}</a><br>
-                            <a href="">{{ soc.when }}</a><br>
-                            <a href="">{{ soc.where }}</a><br>
+                            {% if ((soc.status == 0) and (soc.date == f.day )) %}
+                            <a href="">{{ soc.name }} vs {{ soc.match }}</a><br>
+                            <a href="">{{ soc.date }}</a><br>
+                            <a href="">{{ soc.address }}</a><br>
                             {% endif %}
                             {% endfor %}
                         </td>
@@ -362,10 +362,10 @@
                     <tr>
                         <td>
                             {% for soc in soccer %}
-                            {% if ((soc.is_matched == '1') and (soc.when == s.day )) %}
-                            <a href="">{{ soc.user }} vs {{ soc.match }}</a><br>
-                            <a href="">{{ soc.when }}</a><br>
-                            <a href="">{{ soc.where }}</a><br>
+                            {% if ((soc.status == 0) and (soc.date == s.day )) %}
+                            <a href="">{{ soc.name }} vs {{ soc.match }}</a><br>
+                            <a href="">{{ soc.date }}</a><br>
+                            <a href="">{{ soc.address }}</a><br>
                             {% endif %}
                             {% endfor %}
                         </td>
@@ -382,10 +382,10 @@
                     <tr>
                         <td>
                             {% for soc in soccer %}
-                            {% if ((soc.is_matched == '1') and (soc.when == s.day )) %}
-                            <a href="">{{ soc.user }} vs {{ soc.match }}</a><br>
-                            <a href="">{{ soc.when }}</a><br>
-                            <a href="">{{ soc.where }}</a><br>
+                            {% if  ((soc.status == 0) and (soc.date == s.day )) %}
+                            <a href="">{{ soc.name }} vs {{ soc.match }}</a><br>
+                            <a href="">{{ soc.date }}</a><br>
+                            <a href="">{{ soc.address }}</a><br>
                             {% endif %}
                             {% endfor %}
                         </td>
@@ -402,10 +402,10 @@
                     <tr>
                         <td>
                             {% for soc in soccer %}
-                            {% if ((soc.is_matched == '1') and (soc.when == s.day )) %}
-                            <a href="">{{ soc.user }} vs {{ soc.match }}</a><br>
-                            <a href="">{{ soc.when }}</a><br>
-                            <a href="">{{ soc.where }}</a><br>
+                            {% if  ((soc.status == 0) and (soc.date == s.day )) %}
+                            <a href="">{{ soc.name }} vs {{ soc.match }}</a><br>
+                            <a href="">{{ soc.date }}</a><br>
+                            <a href="">{{ soc.address }}</a><br>
                             {% endif %}
                             {% endfor %}
                         </td>
@@ -422,10 +422,10 @@
                     <tr>
                         <td>
                             {% for soc in soccer %}
-                            {% if ((soc.is_matched == '1') and (soc.when == s.day )) %}
-                            <a href="">{{ soc.user }} vs {{ soc.match }}</a><br>
-                            <a href="">{{ soc.when }}</a><br>
-                            <a href="">{{ soc.where }}</a><br>
+                            {% if  ((soc.status == 0) and (soc.date == s.day )) %}
+                            <a href="">{{ soc.name }} vs {{ soc.match }}</a><br>
+                            <a href="">{{ soc.date }}</a><br>
+                            <a href="">{{ soc.address }}</a><br>
                             {% endif %}
                             {% endfor %}
                         </td>
@@ -449,19 +449,17 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <a target="" href="./detail.html" class="card-title soccer_title">{{ soccer_team.user }}</a>
-                    <h5 class="s_title">{{ soccer_team.title }}</h5>
+                    <a target="" href="./detail.html" class="card-title soccer_title">{{ soccer_team.name }}</a>
+                    <h5 class="s_title">{{ soccer_team.text }}</h5>
                     <div class="comment_box">
-                        <p class="card-text"><small class="s_name">{{ soccer_team.user }}</small><small
+                        <p class="card-text"><small class="s_name">{{ soccer_team.name }}</small><small
                                 class="text-muted comment ellipsis">팀 </small></p>
-                        <p class="card-text"><small class="s_where">어디서? : {{ soccer_team.where }}</small></p>
-                        <p class="card-text"><small class="s_when">언제? : {{ soccer_team.when }}</small></p>
+                        <p class="card-text"><small class="s_where">어디서? : {{ soccer_team.address }}</small></p>
+                        <p class="card-text"><small class="s_when">언제? : {{ soccer_team.date }}</small></p>
 
                         <p class="card-text"><small class="s_is_matched">매칭안됨</small></p>
+                        <a target="" href="./detailtest/{{ soccer_team.name }}" class="card-title soccer_title">{{ soccer_team.name }}팀 매칭</a>
 
-
-                        <a target="" href="./detail/${user}.html" class="card-title soccer_title">{{ soccer_team.user
-                            }}팀과 매칭하러가기</a>
 
                     </div>
                 </div>
@@ -474,19 +472,19 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <a target="" href="./detail.html" class="card-title soccer_title">{{ soccer_team.user }}</a>
-                    <h5 class="s_title">{{ soccer_team.title }}</h5>
+                    <a target="" href="./detail.html" class="card-title soccer_title">{{ soccer_team.name }}</a>
+                    <h5 class="s_title">{{ soccer_team.text }}</h5>
                     <div class="comment_box">
-                        <p class="card-text"><small class="s_name">{{ soccer_team.user }}</small><small
+                        <p class="card-text"><small class="s_name">{{ soccer_team.name }}</small><small
                                 class="text-muted comment ellipsis">팀 </small></p>
-                        <p class="card-text"><small class="s_where">어디서? : {{ soccer_team.where }}</small></p>
-                        <p class="card-text"><small class="s_when">언제? : {{ soccer_team.when }}</small></p>
+                        <p class="card-text"><small class="s_where">어디서? : {{ soccer_team.address }}</small></p>
+                        <p class="card-text"><small class="s_when">언제? : {{ soccer_team.date }}</small></p>
 
                         <p class="card-text"><small class="s_is_matched">매칭됨</small></p>
 
 
-                        <a target="" href="./detail/${user}.html" class="card-title soccer_title">누구랑? :
-                            {{ soccer_team.match }} </a>
+                        <a target="" href="./detailtest/{{ soccer_team.user }}" class="card-title soccer_title">누구랑? :
+                                                              {{ soccer_team.match }} </a>
 
                     </div>
                 </div>
