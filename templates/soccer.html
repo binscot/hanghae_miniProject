@@ -1,0 +1,470 @@
+<!Doctype html>
+<html lang="ko">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Font Awesome CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+
+    <!-- 구글폰트 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300;500;700&display=swap" rel="stylesheet">
+
+    <title>축구경기 매칭 서비스</title>
+    <style type="text/css">
+        tr.highlight > td {
+            background-color: #e8344e;
+            color: white;
+        }
+
+        tr.highlight a {
+            color: white;
+        }
+
+        * {
+            font-family: 'Sunflower', sans-serif;
+        }
+
+
+        /*a태그 마우스오버시 밑줄 없애기*/
+        a:hover {
+            text-decoration: none
+        }
+
+        /*말줄임 class*/
+        .ellipsis {
+            width: 75%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis; /* 말줄임 적용 */
+            vertical-align: bottom;
+            display: inline-block;
+        }
+
+        .title_box {
+            padding: 50px 30px;
+        }
+
+        .title {
+            font-family: 'Do Hyeon', sans-serif;
+            font-size: 35px;
+            text-align: center;
+            color: white;
+            cursor: pointer;
+        }
+
+        .title span {
+            font-size: 38px;
+        }
+
+        .cards_box {
+            padding: 30px;
+
+        }
+
+        .cards_box .card {
+            border: 3px solid rgba(0, 0, 0, 0);
+            transition: 0.3s;
+        }
+
+        /*card에 마우스 올리면 border로 선택한 카드 표시*/
+        .cards_box .card:hover {
+            border: 3px solid rgba(255, 0, 0, 0.8);
+            transition: 0.3s;
+        }
+
+        .card-deck {
+            display: block;
+        }
+
+        .card-deck .card {
+            display: inline-block;
+            width: calc(25% - 33px);
+            padding: 10px;
+            margin-bottom: 30px;
+        }
+
+        .card-body {
+            padding: 20px 15px 10px;
+        }
+
+        .img_box {
+            position: relative;
+        }
+
+        .like_box {
+            width: 40px;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+
+        .mbtn{
+            width: 200px;
+            margin: 10px auto auto auto;
+            display: block;
+
+        }
+
+        .soccer_title {
+            margin: auto;
+            display: block;
+            font-size: 1.5rem;
+            color: black;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .comment_box {
+            margin-top: 20px;
+            border-top: 1px solid gray;
+            padding: 20px 0 0;
+        }
+
+
+        .popup_btn {
+            width: 70px;
+            height: 70px;
+            position: fixed;
+            bottom: 40px;
+            right: 40px;
+            border-radius: 30px;
+            background-color: #e8344e;
+            text-align: center;
+            text-align-all: center;
+        }
+
+        .logo-img {
+            width: 100px;
+            position: center;
+            margin: auto;
+
+        }
+
+
+        .title {
+            font-weight: 800;
+            font-size: 5rem;
+        }
+
+        .subtitle {
+            font-size: 2rem;
+        }
+
+        .is-sparta {
+            color: #e8344e !important;
+        }
+
+        .button.is-sparta {
+
+            width: 300px;
+            background-color: #3273dc;
+            border-color: transparent;
+            color: #fff !important;
+            margin: 50px auto;
+
+        }
+
+        .s_title{
+            margin: auto;
+            display: block;
+            text-align: center;
+        }
+
+
+    </style>
+    <script>
+        let words = {{ soccer | tojson }};
+        console.log(words);
+        let word_list = [];
+        for (let i = 0; i < words.length; i++) {
+            word_list.push(words[i]["when"])
+        }
+
+        function find_match() {
+            let word = $("#input-soccer").val().toLowerCase();
+            console.log(word);
+            if (word == "") {
+                // 빈 문자열이면 얼럿
+                alert("please write something first :)")
+                return
+            }
+            if (word_list.includes(word)) {
+                // 리스트에 없으면 상세 페이지로
+                alert('경기있음')
+                for (let i = 0; i < words.length; i++) {
+                    console.log(words[i]["when"]);
+                    if (words[i]["when"] == word) {
+                        alert(words[i]["user"] + "의 경기")
+                        // $(`#word-${word}`).addClass('highlight').siblings().removeClass('highlight');
+                        // $(`#word-${word}`)[0].scrollIntoView();
+                    }
+                }
+
+            }
+
+        }
+
+
+    </script>
+</head>
+
+<body>
+<section class="hero is-link">
+    <div class="hero-body">
+        <div class="logo-img">
+            <img src="static/soccer.png" alt="My Image">
+        </div>
+    </div>
+</section>
+<section class="hero is-white">
+    <div class="hero-body has-text-centered" style="padding-bottom:1rem;margin:auto;">
+        <h1 class="title is-sparta">Amateur soccer league</h1>
+        <h3 class="subtitle is-sparta">축구경기 매칭 플랫폼</h3>
+    </div>
+</section>
+<div class="wrap">
+    {#    <div class="title_box">#}
+    {#        <!--타이틀 클릭시 메인화면으로 이동-->#}
+    {#        <a href="./"><h1 class="title">축구 매칭:<span>팀 경기 매칭 서비스</span></h1></a>#}
+    {#    </div>#}
+    {#    <div class="cards_box">#}
+    {#        <!--    card-deck에 id(music_box)추가함    -->#}
+    {#        <div class="cccc" id="cccc">#}
+    {#            <input id="input-soccer" class="form-control" style="margin-right: 0.5rem">#}
+    {#            <button onclick="find_match()" type="button" class="btn btn-primary">날짜 검색</button>#}
+    {#        </div>#}
+    {#        <div class="cards_box" id="when_box">#}
+    {##}
+    {#        </div>#}
+    {#    </div>#}
+    {#    <center><h1>Jan, 2022</h1></center>#}
+    {#    <style>#}
+    {#        table {#}
+    {#            table-layout: fixed;#}
+    {#            text-align: center;#}
+    {#            margin: auto;#}
+    {##}
+    {#        }#}
+    {##}
+    {#        th {#}
+    {#            color: white;#}
+    {#        }#}
+    {##}
+    {#        td {#}
+    {#            color: white;#}
+    {#        }#}
+    {##}
+    {#        #word-2 {#}
+    {#            color: white;#}
+    {##}
+    {#        }#}
+    {##}
+    {#        h1 {#}
+    {#            color: white;#}
+    {##}
+    {#        }#}
+
+    {#        /*a {*/#}
+    {#        /*    color: white;*/#}
+    {#        /*}*/#}
+    {#    </style>#}
+    {#    <table border="1" width="1250" height="100">#}
+    {#        <tr>#}
+    {#            <th>Sun</th>#}
+    {#            <th>Mon</th>#}
+    {#            <th>Tue</th>#}
+    {#            <th>Wed</th>#}
+    {#            <th>Thur</th>#}
+    {#            <th>Fri</th>#}
+    {#            <th>Sat</th>#}
+    {#        </tr>#}
+    {#        <tr>#}
+    {#            {% for f in first %}#}
+    {#            <td>#}
+    {#                <table>#}
+    {#                    <td>{{ f.day }}</td>#}
+    {#                    <tr>#}
+    {#                        <td>#}
+    {#                            {% for soc in soccer %}#}
+    {#                            {% if ((soc.status == 0) and (soc.date == f.day )) %}#}
+    {#                            <a href="">{{ soc.name }} vs {{ soc.match }}</a><br>#}
+    {#                            <a href="">{{ soc.date }}</a><br>#}
+    {#                            <a href="">{{ soc.address }}</a><br>#}
+    {#                            {% endif %}#}
+    {#                            {% endfor %}#}
+    {#                        </td>#}
+    {#                    </tr>#}
+    {#                </table>#}
+    {#            </td>#}
+    {#            {% endfor %}#}
+    {#        </tr>#}
+    {#        <tr>#}
+    {#            {% for s in second %}#}
+    {#            <td>#}
+    {#                <table>#}
+    {#                    <td>{{ s.day }}</td>#}
+    {#                    <tr>#}
+    {#                        <td>#}
+    {#                            {% for soc in soccer %}#}
+    {#                            {% if ((soc.status == 0) and (soc.date == s.day )) %}#}
+    {#                            <a href="">{{ soc.name }} vs {{ soc.match }}</a><br>#}
+    {#                            <a href="">{{ soc.date }}</a><br>#}
+    {#                            <a href="">{{ soc.address }}</a><br>#}
+    {#                            {% endif %}#}
+    {#                            {% endfor %}#}
+    {#                        </td>#}
+    {#                    </tr>#}
+    {#                </table>#}
+    {#            </td>#}
+    {#            {% endfor %}#}
+    {#        </tr>#}
+    {#        <tr>#}
+    {#            {% for s in third %}#}
+    {#            <td>#}
+    {#                <table>#}
+    {#                    <td>{{ s.day }}</td>#}
+    {#                    <tr>#}
+    {#                        <td>#}
+    {#                            {% for soc in soccer %}#}
+    {#                            {% if  ((soc.status == 0) and (soc.date == s.day )) %}#}
+    {#                            <a href="">{{ soc.name }} vs {{ soc.match }}</a><br>#}
+    {#                            <a href="">{{ soc.date }}</a><br>#}
+    {#                            <a href="">{{ soc.address }}</a><br>#}
+    {#                            {% endif %}#}
+    {#                            {% endfor %}#}
+    {#                        </td>#}
+    {#                    </tr>#}
+    {#                </table>#}
+    {#            </td>#}
+    {#            {% endfor %}#}
+    {#        </tr>#}
+    {#        <tr>#}
+    {#            {% for s in fourth %}#}
+    {#            <td>#}
+    {#                <table>#}
+    {#                    <td>{{ s.day }}</td>#}
+    {#                    <tr>#}
+    {#                        <td>#}
+    {#                            {% for soc in soccer %}#}
+    {#                            {% if  ((soc.status == 0) and (soc.date == s.day )) %}#}
+    {#                            <a href="">{{ soc.name }} vs {{ soc.match }}</a><br>#}
+    {#                            <a href="">{{ soc.date }}</a><br>#}
+    {#                            <a href="">{{ soc.address }}</a><br>#}
+    {#                            {% endif %}#}
+    {#                            {% endfor %}#}
+    {#                        </td>#}
+    {#                    </tr>#}
+    {#                </table>#}
+    {#            </td>#}
+    {#            {% endfor %}#}
+    {#        </tr>#}
+    {#        <tr>#}
+    {#            {% for s in fifth %}#}
+    {#            <td>#}
+    {#                <table>#}
+    {#                    <td>{{ s.day }}</td>#}
+    {#                    <tr>#}
+    {#                        <td>#}
+    {#                            {% for soc in soccer %}#}
+    {#                            {% if  ((soc.status == 0) and (soc.date == s.day )) %}#}
+    {#                            <a href="">{{ soc.name }} vs {{ soc.match }}</a><br>#}
+    {#                            <a href="">{{ soc.date }}</a><br>#}
+    {#                            <a href="">{{ soc.address }}</a><br>#}
+    {#                            {% endif %}#}
+    {#                            {% endfor %}#}
+    {#                        </td>#}
+    {#                    </tr>#}
+    {#                </table>#}
+    {#            </td>#}
+    {#            {% endfor %}#}
+    {#        </tr>#}
+
+
+    </table>
+    <div class="cards_box">
+        <!--    card-deck에 id(music_box)추가함    -->
+        <div class="card-deck" id="soccer_box">
+            {% for soccer_team in soccer %}
+                {% if soccer_team.is_matched == 0 %}
+                    <div class="card">
+                        <div class="img_box">
+                            <div class="like_box">
+                                <p class="team">{{ soccer_team.user }}</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <a target="" href="./detail.html" class="card-title soccer_title">{{ soccer_team.name }}</a>
+                            <h5 class="s_title">{{ soccer_team.text }}</h5>
+                            <div class="comment_box">
+                                <p class="card-text"><small class="s_name">{{ soccer_team.name }}</small><small
+                                        class="text-muted comment ellipsis">팀 </small></p>
+                                <p class="card-text"><small class="s_where">어디서? : {{ soccer_team.address }}</small></p>
+                                <p class="card-text"><small class="s_when">언제? : {{ soccer_team.date }}</small></p>
+                                <p class="card-text"><small class="s_when">연락처 : {{ soccer_team.phone }}</small></p>
+
+                                <p class="card-text"><small class="s_is_matched">매칭안됨</small></p>
+                                <button class="button is-danger mbtn"
+                                        onclick=window.location.href="/detailtest/{{ soccer_team.name }}">{{ soccer_team.name }}팀
+                                    매칭하러 가기
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="card">
+                        <div class="img_box">
+                            <div class="like_box">
+                                <p class="team">{{ soccer_team.user }}</p>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <a target="" href="./detail.html" class="card-title soccer_title">{{ soccer_team.name }}</a>
+                            <h5 class="s_title">{{ soccer_team.text }}</h5>
+                            <div class="comment_box">
+                                <p class="card-text"><small class="s_name">{{ soccer_team.name }}</small><small
+                                        class="text-muted comment ellipsis">팀 </small></p>
+                                <p class="card-text"><small class="s_where">어디서? : {{ soccer_team.address }}</small></p>
+                                <p class="card-text"><small class="s_when">언제? : {{ soccer_team.date }}</small></p>
+                                <p class="card-text"><small class="s_when">연락처 : {{ soccer_team.phone }}</small></p>
+
+                                <p class="card-text"><small class="s_is_matched">매칭됨</small></p>
+
+
+                                <a target="" href="./detailtest/{{ soccer_team.user }}" class="card-title soccer_title">누구랑?
+                                    :
+                                    {{ soccer_team.match }} </a>
+
+                            </div>
+                        </div>
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+            <button class="level-item button is-sparta" onclick=window.location.href="/detail">매칭 등록</button>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Webpage Title -->
+    <title>로그인 페이지</title>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Font Awesome CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <style>
+        .wrap {
+            width: 500px;
+
+            margin: 50px auto;
+
+        }
+
+
+
+
+
+        .card{
+            font-size: 30px;
+            text-align: left;
+            padding-top: 70px;
+            padding-left: 100px;
+            padding-bottom: 70px;
+            font-weight: bold;
+        }
+
+        .banner {
+            width: 100px;
+            height: 140px;
+            position: center;
+            margin: auto;
+
+            background-image: url('/static/soccer.png');
+
+            background-position: center;
+            background-size: contain;
+
+        }
+
+
+
+
+
+        .is-sparta {
+            color: #e8344e !important;
+        }
+
+        .title {
+            font-weight: 800;
+            font-size: 5rem;
+        }
+    </style>
+
+
+</head>
+<body>
+<section class="hero is-link">
+    <div class="hero-body">
+        <div class="banner"></div>
+    </div>
+</section>
+<section class="hero is-white">
+    <div class="hero-body has-text-centered" style="padding-bottom:1rem;margin:auto;">
+        <h1 class="title is-sparta">Amateur soccer league</h1>
+        <h3 class="subtitle is-sparta">축구경기 매칭 플랫폼</h3>
+    </div>
+</section>
+<div class="wrap">
+    {% if soccer_team.is_matched == 0 %}
+        <div class="card">
+{#            <div class="img_box">#}
+{#                <div class="like_box">#}
+{#                    <p class="team">{{ soccer_team.name }}</p>#}
+{#                </div>#}
+{#            </div>#}
+            <div class="card-body">
+{#                <a target="" href="./detail.html" class="card-title soccer_title">{{ soccer_team.name }}</a>#}
+{#                <h5 class="s_title">{{ soccer_team.title }}</h5>#}
+                <div class="comment_box">
+                    <p class="card-text"><small class="s_name">{{ soccer_team.name }}</small><small
+                            class="text-muted comment ellipsis">팀 </small></p>
+                    <p class="card-text"><small class="s_where">어디서? : {{ soccer_team.address }}</small></p>
+                    <p class="card-text"><small class="s_when">언제? : {{ soccer_team.date }}</small></p>
+                    <p class="card-text"><small class="s_when">연락처 : {{ soccer_team.phone }}</small></p>
+
+                    <p class="card-text"><small class="s_is_matched">연락처 : {{ soccer_team.date }}</small></p>
+
+
+{#                    <a target="" href="./match/{{ soccer_team.name }}"#}
+{#                       class="card-title soccer_title">{{ soccer_team.name }}팀 매칭</a>#}
+
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="card">
+            <div class="img_box">
+{#                <div class="like_box">#}
+{#                    <p class="team">{{ soccer_team.user }}</p>#}
+{#                </div>#}
+            </div>
+            <div class="card-body">
+{#                <a target="" href="./detail.html" class="card-title soccer_title">{{ soccer_team.user }}</a>#}
+{#                <h5 class="s_title">{{ soccer_team.title }}</h5>#}
+                <div class="comment_box">
+                    <p class="card-text"><small class="s_name">{{ soccer_team.user }}</small><small
+                            class="text-muted comment ellipsis">팀 </small></p>
+                    <p class="card-text"><small class="s_where">어디서? : {{ soccer_team.address }}</small></p>
+                    <p class="card-text"><small class="s_when">언제? : {{ soccer_team.date }}</small></p>
+                    <p class="card-text"><small class="s_when">연락처 : {{ soccer_team.phone }}</small></p>
+
+                    <p class="card-text"><small class="s_is_matched">매칭됨</small></p>
+
+
+{#                    <a target="" href="./match/{{ soccer_team.user }}" class="card-title soccer_title">누구랑? :#}
+{#                        {{ soccer_team.match }} </a>#}
+
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+</div>
+
+</body>
+</html>
+
