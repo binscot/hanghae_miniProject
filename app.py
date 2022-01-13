@@ -45,18 +45,12 @@ def login():
 # 매치 삭제하기
 @app.route('/api/delete_match', methods=['POST'])
 def delete_match():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-
-        # 클라이언트에게 이름 받아오기
-        name_receive = request.form["name_give"]
-        # 받아온 이름을 db에서 찾아 삭제하기
-        db.orders.delete_one({"name": name_receive})
-        # 성공하면 매치삭제 알럿 띄어주기
-        return jsonify({'result': 'success', 'msg': f'매치{name_receive}삭제'})
-    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
-        return redirect(url_for("home"))
+    # 클라이언트에게 이름 받아오기
+    name_receive = request.form["name_give"]
+    # 받아온 이름을 db에서 찾아 삭제하기
+    db.orders.delete_one({"name": name_receive})
+    # 성공하면 매치삭제 알럿 띄어주기
+    return jsonify({'result': 'success', 'msg': f'매치 삭제'})
 
 
 # 로그인
@@ -75,7 +69,7 @@ def sign_in():
             'id': username_receive,
             'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
         }
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8') #Ubuntu의 python 버전이 3.8보다 낮을경우 적용
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')  # Ubuntu의 python 버전이 3.8보다 낮을경우 적용
 
         return jsonify({'result': 'success', 'token': token})
     # 찾지 못하면
