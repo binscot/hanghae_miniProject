@@ -34,7 +34,7 @@ deploy
 ## 3.실행화면
 ---
 
-
+https://youtu.be/k2OG-4_IFZ4
 
 ## 4.핵심기능
 ---
