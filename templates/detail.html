@@ -24,7 +24,8 @@
             crossorigin="anonymous"></script>
 
     <title>매칭등록 </title>
-
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
 
     <style>
@@ -57,10 +58,22 @@
             color: #e8344e !important;
         }
 
+        .title {
+            font-weight: 800;
+            font-size: 5rem;
+        }
 
+        .subtitle {
+            font-size: 2rem;
+        }
 
+        .is-sparta {
+            color: #e8344e !important;
+        }
 
-
+        .ccc{
+            cursor: pointer;
+        }
 
 
     </style>
@@ -99,46 +112,36 @@
 </head>
 
 <body>
-<section class="hero is-link">
-    <div class="hero-body">
+<section class="hero is-link ccc">
+    <div class="hero-body" onclick="window.location.href = '/main'">
         <div class="logo-img">
             <img src="static/soccer.png" alt="My Image">
         </div>
     </div>
 </section>
-<section class="hero is-white">
+<section class="hero is-white ccc">
     <div class="hero-body has-text-centered" style="padding-bottom:1rem;margin:auto;">
         <h1 class="title is-sparta">Amateur soccer league</h1>
         <h3 class="subtitle is-sparta">축구경기 매칭 플랫폼</h3>
     </div>
 </section>
 <div class="wrap">
-
     <div class="item-order">
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">팀명</span>
-            </div>
-            <input id="order-name" type="text" class="form-control" aria-label="Default"
-                   aria-describedby="inputGroup-sizing-default">
+        <div class="form-floating mb-3">
+            <input id="order-name" type="text" class="form-control" placeholder="팀명">
         </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">평균실력</label>
-            </div>
+
+        <div class="form-floating mb-3">
             <select id="order-count" class="custom-select">
-                <option selected>선택</option>
+                <option selected>평균실력</option>
                 <option value="상">상</option>
                 <option value="중">중</option>
                 <option value="하">하</option>
             </select>
         </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">평균연령</label>
-            </div>
+        <div class="form-floating mb-3">
             <select id="order-age" class="custom-select">
-                <option selected>선택</option>
+                <option selected>평균연령</option>
                 <option value="10">10</option>
                 <option value="20">20</option>
                 <option value="30">30</option>
@@ -147,65 +150,23 @@
                 <option value="etc">etc</option>
             </select>
         </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">장소</span>
-            </div>
+        <div class="form-floating mb-3">
             <input id="order-address" type="text" class="form-control" aria-label="Default"
+                   aria-describedby="inputGroup-sizing-default" placeholder="장소">
+        </div>
+        <div class="form-floating mb-3">
+            <input id="order-date" type="datetime-local" class="form-control" aria-label="Default"
                    aria-describedby="inputGroup-sizing-default">
         </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">시간</span>
-            </div>
-            <input id="order-date" type="text" class="form-control" aria-label="Default"
-                   aria-describedby="inputGroup-sizing-default">
-        </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">전화번호</span>
-            </div>
+        <div class="form-floating mb-3">
             <input id="order-phone" type="text" class="form-control" aria-label="Default"
-                   aria-describedby="inputGroup-sizing-default">
+                   aria-describedby="inputGroup-sizing-default" placeholder="연락처">
         </div>
-        <div class="input-group mb-3">
-            <div class="input-group-prepend">
-                <span class="input-group-text">코멘트</span>
-            </div>
-            <textarea class="form-control" id="order-text" rows="3"></textarea>
+        <div class="form-floating mb-3">
+            <textarea class="form-control" id="order-text" rows="3" placeholder="코멘트"></textarea>
         </div>
-
         <button type="button" onclick="order()" class="btn btn-primary btn-order">등록하기</button>
     </div>
-    {#    <table class="table">#}
-    {#        <thead>#}
-    {#        <tr>#}
-    {#            {{ soc[0]["count"] }}#}
-    {#        </tr>#}
-    {#        </thead>#}
-    {#        <tbody id="orders-box">#}
-    {#        </tbody>#}
-    {#    </table>#}
-
-    {#    {% for aaa in soc %}#}
-    {#    <div class="card" style="width: 28rem;">#}
-    {#        <div class="card-body">#}
-    {#            <h5 class="card-title">팀명 : {{ aaa["name"] }}</h5>#}
-    {#            <h6 class="card-subtitle mb-2 text-muted">평균실력 : {{ aaa["count"] }}</h6>#}
-    {#            <h6 class="card-subtitle mb-2 text-muted">평균연령 : {{ aaa["age"] }}</h6>#}
-    {#            <h6 class="card-subtitle mb-2 text-muted">장소 : {{ aaa["address"] }}</h6>#}
-    {#            <h6 class="card-subtitle mb-2 text-muted">시간 : {{ aaa["date"] }}</h6>#}
-    {#            <h6 class="card-subtitle mb-2 text-muted">코멘트 : {{ aaa["text"] }}</h6>#}
-    {#        </div>#}
-    {#        <div id="form-commentInfo">#}
-    {#            <div id="comment-count">댓글 <span id="count">0</span></div>#}
-    {#            <input id="comment-input" placeholder="댓글을 입력해 주세요.">#}
-    {#            <button id="submit">등록</button>#}
-    {#        </div>#}
-    {##}
-    {#    </div>#}
-    {#    <br>#}
-    {#    {% endfor %}#}
 </div>
 </body>
 

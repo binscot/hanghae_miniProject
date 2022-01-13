@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <!-- Webpage Title -->
-    <title>로그인 페이지</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Sparta Vocabulary Notebook</title>
+
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -12,12 +15,33 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <!-- Font Awesome CSS -->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href='{{ url_for("static", filename="mystyle.css") }}' rel="stylesheet">
 
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
 
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300;500;700&display=swap" rel="stylesheet">
+
     <style>
+        * {
+            font-family: 'Sunflower', sans-serif;
+        }
+
         .wrap {
             width: 500px;
 
@@ -27,15 +51,29 @@
 
 
 
+        .s_name{
+            font-size: 35px;
+            text-align-all: center;
+            display: block;
+
+        }
 
 
         .card{
             font-size: 30px;
-            text-align: left;
             padding-top: 70px;
-            padding-left: 100px;
             padding-bottom: 70px;
             font-weight: bold;
+        }
+
+        .hr{
+            width: 300px;
+            background-color: gray;
+            margin-left: 90px;
+        }
+
+        .ccc{
+            cursor: pointer;
         }
 
         .banner {
@@ -51,9 +89,12 @@
 
         }
 
+        .card-text{
+            padding-left: 100px;
+        }
+        
 
-
-
+        
 
         .is-sparta {
             color: #e8344e !important;
@@ -63,77 +104,71 @@
             font-weight: 800;
             font-size: 5rem;
         }
+
+        .btn-d{
+            background-color: #e8344e;
+            color: white;
+            width: 100px;
+            margin: 40px auto 0 auto;
+            display: block;
+        }
+
+        .has-text-centered{
+
+        }
     </style>
+    <script>
+        function delete_match() {
+            $.ajax({
+                type: "POST",
+                url: `/api/delete_match`,
+                data: {
+                    name_give: "{{ soccer_team.name }}"
+                },
+                success: function (response) {
+                    alert(response["msg"])
+                    window.location.href = "/main"
+                }
+            });
+        }
+
+
+    </script>
 
 
 </head>
 <body>
-<section class="hero is-link">
+<section class="hero is-link ccc" onclick="window.location.href = '/main'">
     <div class="hero-body">
         <div class="banner"></div>
     </div>
 </section>
-<section class="hero is-white">
+<section class="hero is-white ccc" onclick="window.location.href = '/main'">
     <div class="hero-body has-text-centered" style="padding-bottom:1rem;margin:auto;">
         <h1 class="title is-sparta">Amateur soccer league</h1>
         <h3 class="subtitle is-sparta">축구경기 매칭 플랫폼</h3>
     </div>
 </section>
 <div class="wrap">
-    {% if soccer_team.is_matched == 0 %}
         <div class="card">
-{#            <div class="img_box">#}
-{#                <div class="like_box">#}
-{#                    <p class="team">{{ soccer_team.name }}</p>#}
-{#                </div>#}
-{#            </div>#}
+
             <div class="card-body">
-{#                <a target="" href="./detail.html" class="card-title soccer_title">{{ soccer_team.name }}</a>#}
-{#                <h5 class="s_title">{{ soccer_team.title }}</h5>#}
                 <div class="comment_box">
-                    <p class="card-text"><small class="s_name">{{ soccer_team.name }}</small><small
-                            class="text-muted comment ellipsis">팀 </small></p>
-                    <p class="card-text"><small class="s_where">어디서? : {{ soccer_team.address }}</small></p>
-                    <p class="card-text"><small class="s_when">언제? : {{ soccer_team.date }}</small></p>
+                    <p class="card-text-name has-text-centered"><small class="s_name">{{ soccer_team.name }}</small><small
+                            class="text-muted comment ellipsis"> </small></p>
+                    <hr class="hr">
+                    <p class="card-text"><small class="s_when">실력 : {{ soccer_team.count }}</small></p>
+                    <p class="card-text"><small class="s_when">연령대 : {{ soccer_team.age }}</small></p>
+                    <p class="card-text"><small class="s_where">장소 : {{ soccer_team.address }}</small></p>
+                    <p class="card-text"><small class="s_when">일정 : {{ soccer_team.date }}</small></p>
                     <p class="card-text"><small class="s_when">연락처 : {{ soccer_team.phone }}</small></p>
 
-                    <p class="card-text"><small class="s_is_matched">연락처 : {{ soccer_team.date }}</small></p>
-
-
-{#                    <a target="" href="./match/{{ soccer_team.name }}"#}
-{#                       class="card-title soccer_title">{{ soccer_team.name }}팀 매칭</a>#}
-
                 </div>
+                <button id="btn-delete"  class="btn btn-sparta btn-lg btn-d" onclick="delete_match()">
+                    <i class="fa fa-trash-o" aria-hidden="true">삭제</i>
+                </button>
             </div>
         </div>
-    {% else %}
-        <div class="card">
-            <div class="img_box">
-{#                <div class="like_box">#}
-{#                    <p class="team">{{ soccer_team.user }}</p>#}
-{#                </div>#}
-            </div>
-            <div class="card-body">
-{#                <a target="" href="./detail.html" class="card-title soccer_title">{{ soccer_team.user }}</a>#}
-{#                <h5 class="s_title">{{ soccer_team.title }}</h5>#}
-                <div class="comment_box">
-                    <p class="card-text"><small class="s_name">{{ soccer_team.user }}</small><small
-                            class="text-muted comment ellipsis">팀 </small></p>
-                    <p class="card-text"><small class="s_where">어디서? : {{ soccer_team.address }}</small></p>
-                    <p class="card-text"><small class="s_when">언제? : {{ soccer_team.date }}</small></p>
-                    <p class="card-text"><small class="s_when">연락처 : {{ soccer_team.phone }}</small></p>
-
-                    <p class="card-text"><small class="s_is_matched">매칭됨</small></p>
-
-
-{#                    <a target="" href="./match/{{ soccer_team.user }}" class="card-title soccer_title">누구랑? :#}
-{#                        {{ soccer_team.match }} </a>#}
-
-                </div>
-            </div>
-        </div>
-
-    {% endif %}
 </div>
 
 </body>

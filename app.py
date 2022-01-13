@@ -83,7 +83,7 @@ def detail_test(name=None):
     soccer_team = db.orders.find_one({'name': name}, {'_id': False})
     print(soccer_team)
 
-    return render_template('detail_test.html',  soccer_team= soccer_team)
+    return render_template('detail_test.html',  soccer_team=soccer_team)
 
 
 @app.route('/sign_in', methods=['POST'])
@@ -161,11 +161,12 @@ def save_order():
     return jsonify({'result': 'success', 'msg': '매칭 등록 완료!'})
 
 
-# 주문 목록보기(Read) API
-# @app.route('/order', methods=['GET'])
-# def view_orders():
-#     orders = list(db.orders.find({}, {'_id': False}))
-#     return jsonify({'result': 'success', 'orders': orders})
+@app.route('/api/delete_match', methods=['POST'])
+def delete_match():
+    # 단어 삭제하기
+    name_receive = request.form["name_give"]
+    db.orders.delete_one({"name": name_receive})
+    return jsonify({'result': 'success', 'msg': f'매치{name_receive}삭제'})
 
 
 if __name__ == '__main__':
