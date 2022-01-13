@@ -31,7 +31,6 @@ def home():
     # 시간이 지났거나 인증이 안  주소창에 로그인 시간만료 띄어주기
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
-    # 토큰이 없으면
     except jwt.exceptions.DecodeError:
         return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
 
@@ -46,12 +45,18 @@ def login():
 # 매치 삭제하기
 @app.route('/api/delete_match', methods=['POST'])
 def delete_match():
-    # 클라이언트에게 이름 받아오기
-    name_receive = request.form["name_give"]
-    # 받아온 이름을 db에서 찾아 삭제하기
-    db.orders.delete_one({"name": name_receive})
-    # 성공하면 매치삭제 알럿 띄어주기
-    return jsonify({'result': 'success', 'msg': f'매치{name_receive}삭제'})
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+
+        # 클라이언트에게 이름 받아오기
+        name_receive = request.form["name_give"]
+        # 받아온 이름을 db에서 찾아 삭제하기
+        db.orders.delete_one({"name": name_receive})
+        # 성공하면 매치삭제 알럿 띄어주기
+        return jsonify({'result': 'success', 'msg': f'매치{name_receive}삭제'})
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 
 # 로그인
@@ -70,7 +75,7 @@ def sign_in():
             'id': username_receive,
             'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
         }
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256') #.decode('utf-8') Ubuntu의 python 버전이 3.8보다 낮을경우 적용
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8') #Ubuntu의 python 버전이 3.8보다 낮을경우 적용
 
         return jsonify({'result': 'success', 'token': token})
     # 찾지 못하면
@@ -105,46 +110,47 @@ def check_dup():
     return jsonify({'result': 'success', 'exists': exists})
 
 
-# @app.route('/main')
-# def login():
-#     msg = request.args.get("msg")
-#     return render_template('index.html', msg=msg)
-
 # 보여주기
 @app.route('/main')
 def hello_world():
-    # DB에서 축구팀 내용 전체 불러오기
-    soccer_team = list(db.orders.find({'status': 0}, {'_id': False}))
-    # 달력 만들어서 날짜별로 매칭팀 보여주기 -> 삭제
-    dict_f = dict()
-    first = list()
-    for i in range(1, 8):
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        # DB에서 축구팀 내용 전체 불러오기
+        soccer_team = list(db.orders.find({'status': 0}, {'_id': False}))
+        # 달력 만들어서 날짜별로 매칭팀 보여주기 -> 삭제
         dict_f = dict()
-        dict_f['day'] = str(i)
-        first.append(dict_f)
-    second = list()
-    for i in range(8, 15):
-        dict_f = dict()
-        dict_f['day'] = str(i)
-        second.append(dict_f)
-    third = list()
-    for i in range(15, 22):
-        dict_f = dict()
-        dict_f['day'] = str(i)
-        third.append(dict_f)
-    fourth = list()
-    for i in range(22, 29):
-        dict_f = dict()
-        dict_f['day'] = str(i)
-        fourth.append(dict_f)
-    fifth = list()
-    for i in range(29, 32):
-        dict_f = dict()
-        dict_f['day'] = str(i)
-        fifth.append(dict_f)
-    # jinja2 template으로 내용보내기
-    return render_template('soccer.html', soccer=soccer_team, first=first, second=second, third=third, fourth=fourth,
-                           fifth=fifth)
+        first = list()
+        for i in range(1, 8):
+            dict_f = dict()
+            dict_f['day'] = str(i)
+            first.append(dict_f)
+        second = list()
+        for i in range(8, 15):
+            dict_f = dict()
+            dict_f['day'] = str(i)
+            second.append(dict_f)
+        third = list()
+        for i in range(15, 22):
+            dict_f = dict()
+            dict_f['day'] = str(i)
+            third.append(dict_f)
+        fourth = list()
+        for i in range(22, 29):
+            dict_f = dict()
+            dict_f['day'] = str(i)
+            fourth.append(dict_f)
+        fifth = list()
+        for i in range(29, 32):
+            dict_f = dict()
+            dict_f['day'] = str(i)
+            fifth.append(dict_f)
+        # jinja2 template으로 내용보내기
+        return render_template('soccer.html', soccer=soccer_team, first=first, second=second, third=third,
+                               fourth=fourth,
+                               fifth=fifth)
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
 
 
 @app.route('/detailtest/<name>', methods=['GET'])
